@@ -11,7 +11,9 @@ declare global {
 export default function InputForm() {
   const [address, setAddress] = useState('');
   const [amount, setAmount] = useState('');
-  const [error, setError] = useState();
+  const [error, setError] = useState<string | null>();
+  const [success, setSuccess] =
+    useState<ethers.providers.TransactionResponse | null>(null);
 
   const submitFunction = async () => {
     try {
@@ -30,6 +32,9 @@ export default function InputForm() {
         to: address,
         value: ethers.utils.parseEther(amount.toString()),
       });
+
+      setSuccess(transaction);
+
       console.log(transaction.hash);
     } catch (err: any) {
       setError(err.message);
@@ -38,7 +43,7 @@ export default function InputForm() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center w-25 border rounded input-form pt-4 pb-4">
+    <div className="d-flex flex-column align-items-center w-25 border rounded input-form pt-4 pb-3">
       <div className="mt-3">
         <Input
           value={address}
@@ -57,12 +62,13 @@ export default function InputForm() {
           placeholder="Amount"
         />
       </div>
-      <div className="d-flex mt-3">
+      <div className="d-flex mt-4">
         <button
           className="btn btn-primary me-2"
           onClick={() => {
             setAddress('');
             setAmount('');
+            setError('');
           }}
         >
           clear
@@ -71,11 +77,22 @@ export default function InputForm() {
           className="btn btn-primary ms-2"
           onClick={() => submitFunction()}
         >
-          {' '}
           Send
         </button>
       </div>
-      <p>{error}</p>
+      {error && <p className=" mx-4 bg-danger text-white mt-2">{error}</p>}
+      {success && (
+        <p className="bg-info text-white mx-4 mt-2">
+          Click{' '}
+          <a
+            target="_blank"
+            href={'https://ropsten.etherscan.io/tx/' + success.hash}
+          >
+            here
+          </a>{' '}
+          to see transaction (note this may take 30 seconds)
+        </p>
+      )}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import InputForm from './components/InputForm';
 
 function App() {
   return (
-    <div className="w-100 d-flex justify-content-center">
+    <div style={{height: "80vh"}} className="w-100 d-flex justify-content-center align-items-center">
       <InputForm />
     </div>
   );

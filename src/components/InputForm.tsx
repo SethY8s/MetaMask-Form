@@ -24,18 +24,13 @@ export default function InputForm() {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
-      ethers.utils.getAddress(address)
+      ethers.utils.getAddress(address);
 
       const transaction = await signer.sendTransaction({
         to: address,
         value: ethers.utils.parseEther(amount.toString()),
       });
-
-      const data = {
-        address,
-        amount,
-      };
-      console.log(data);
+      console.log(transaction.hash);
     } catch (err: any) {
       setError(err.message);
       console.log(err.message);
@@ -43,36 +38,42 @@ export default function InputForm() {
   };
 
   return (
-    <div className="d-flex flex-column align-items-center w-25 border rounded border-primary input-form">
-      <Input
-        value={address}
-        onChange={(event) => setAddress(event.target.value)}
-        size="large"
-        type="text"
-        placeholder="Address"
-      />
-      <Input
-        value={amount}
-        onChange={(event) => setAmount(event.target.value)}
-        size="large"
-        type="number"
-        placeholder="Amount"
-      />
-      <div className="d-flex">
-        <Button
+    <div className="d-flex flex-column align-items-center w-25 border rounded input-form pt-4 pb-4">
+      <div className="mt-3">
+        <Input
+          value={address}
+          onChange={(event) => setAddress(event.target.value)}
+          size="large"
+          type="text"
+          placeholder="Address"
+        />
+      </div>
+      <div className="mt-3">
+        <Input
+          value={amount}
+          onChange={(event) => setAmount(event.target.value)}
+          size="large"
+          type="number"
+          placeholder="Amount"
+        />
+      </div>
+      <div className="d-flex mt-3">
+        <button
+          className="btn btn-primary me-2"
           onClick={() => {
             setAddress('');
             setAmount('');
           }}
-          text="clear"
-          theme="secondary"
-        />
-        <Button
+        >
+          clear
+        </button>
+        <button
+          className="btn btn-primary ms-2"
           onClick={() => submitFunction()}
-          text="Send"
-          size="large"
-          theme="secondary"
-        />
+        >
+          {' '}
+          Send
+        </button>
       </div>
       <p>{error}</p>
     </div>

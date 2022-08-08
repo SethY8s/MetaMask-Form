@@ -1,12 +1,11 @@
 import React from 'react';
-
-
+import InputForm from './components/InputForm';
 
 
 function App() {
   return (
     <div className="App">
-      Welcome to the project
+      <InputForm />
     </div>
   );
 }

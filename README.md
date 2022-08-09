@@ -14,3 +14,6 @@ feel free to clone this repo and start working on it too!
 ### 'npm start'
 
 and that is all!
+
+![Screenshot 2022-08-09 093504](https://user-images.githubusercontent.com/95386742/183662534-454838d7-1abf-47e0-8580-c49ba7e64c4a.png)
+
